@@ -1,5 +1,5 @@
-import { Elysia } from "elysia";
 import { bearer } from "@elysiajs/bearer";
+import { Elysia } from "elysia";
 
 const app = new Elysia()
   .use(bearer())
