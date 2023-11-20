@@ -3,19 +3,18 @@ import { bearer } from "@elysiajs/bearer";
 
 const app = new Elysia()
   .use(bearer())
-  .post("/", () => "Hello World!", {
-    beforeHandle({ bearer, set }) {
-      if (!bearer) {
-        set.status = 400;
-        return "INVALID_REQUEST";
-      }
+  .on("beforeHandle", ({ bearer, set }) => {
+    if (!bearer) {
+      set.status = 400;
+      return "INVALID_REQUEST";
+    }
 
-      if (bearer !== process.env.API_TOKEN) {
-        set.status = 403;
-        return "UNAUTHORIZED";
-      }
-    },
+    if (bearer !== process.env.API_TOKEN) {
+      set.status = 403;
+      return "UNAUTHORIZED";
+    }
   })
+  .post("/", () => "Hello World!")
   .listen(process.env.PORT || 3000);
 
 console.log(
