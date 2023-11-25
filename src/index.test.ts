@@ -7,7 +7,7 @@ describe("Elysia", () => {
       .handle(
         new Request("http://localhost:3000/", {
           method: "POST",
-        }),
+        })
       )
       .then((res) => res.json());
 
@@ -22,7 +22,7 @@ describe("Elysia", () => {
             Authorization: `Bearer invalid_token`,
           },
           method: "POST",
-        }),
+        })
       )
       .then((res) => res.json());
 
@@ -34,10 +34,10 @@ describe("Elysia", () => {
       .handle(
         new Request("http://localhost:3000/", {
           headers: {
-            Authorization: `Bearer ${process.env.API_TOKEN}`,
+            Authorization: `Bearer ${process.env.API__TOKEN}`,
           },
           method: "POST",
-        }),
+        })
       )
       .then((res) => res.json());
 

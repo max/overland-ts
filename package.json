@@ -7,7 +7,9 @@
   },
   "dependencies": {
     "@elysiajs/bearer": "^0.7.0",
-    "elysia": "^0.7.29"
+    "@jclem/config": "^4.0.0",
+    "elysia": "^0.7.29",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "bun-types": "latest",
