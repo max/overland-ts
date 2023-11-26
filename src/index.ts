@@ -1,6 +1,8 @@
+import swagger from "@elysiajs/swagger";
 import { Elysia, ErrorHandler } from "elysia";
 import { apiRouter } from "./api";
 import { logger } from "./lib/logger";
+import { swaggerConfig } from "./lib/swagger";
 
 const handleError: ErrorHandler = ({ code, error }) => {
   logger.error(error);
@@ -22,6 +24,7 @@ const logRequest = (context: { [x: string]: any }) => {
 export const app = new Elysia()
   .onError(handleError)
   .on("beforeHandle", logRequest)
+  .use(swagger(swaggerConfig))
   .use(apiRouter)
   .listen(process.env.PORT || 3000);
 
