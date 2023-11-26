@@ -1,7 +1,7 @@
 import { describe, expect, it } from "bun:test";
 import exampleData from "../example-data.json";
-import { app } from "./index";
-import config from "./lib/config";
+import { app } from "../src/index";
+import config from "../src/lib/config";
 
 describe("Overland API", () => {
   it("responds with a 403 when no bearer token is provided", async () => {
@@ -12,7 +12,7 @@ describe("Overland API", () => {
         },
         method: "POST",
         body: JSON.stringify(exampleData),
-      }),
+      })
     );
 
     expect(res.status).toBe(403);
@@ -27,7 +27,7 @@ describe("Overland API", () => {
         },
         method: "POST",
         body: JSON.stringify(exampleData),
-      }),
+      })
     );
 
     expect(res.status).toBe(403);
@@ -42,7 +42,7 @@ describe("Overland API", () => {
         },
         method: "POST",
         body: JSON.stringify(exampleData),
-      }),
+      })
     );
 
     expect(res.status).toBe(200);
@@ -57,7 +57,7 @@ describe("Overland API", () => {
         },
         method: "POST",
         body: JSON.stringify({}),
-      }),
+      })
     );
 
     expect(res.status).toBe(400);
