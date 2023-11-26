@@ -1,7 +1,7 @@
 import { describe, expect, it } from "bun:test";
-import exampleData from "../example-data.json";
 import { app } from "../src/index";
 import config from "../src/lib/config";
+import overlandRequestMock from "./fixtures/overland-request-mock.json";
 
 describe("Overland API", () => {
   it("responds with a 403 when no bearer token is provided", async () => {
@@ -11,7 +11,7 @@ describe("Overland API", () => {
           "content-type": "application/json",
         },
         method: "POST",
-        body: JSON.stringify(exampleData),
+        body: JSON.stringify(overlandRequestMock),
       })
     );
 
@@ -26,7 +26,7 @@ describe("Overland API", () => {
           "content-type": "application/json",
         },
         method: "POST",
-        body: JSON.stringify(exampleData),
+        body: JSON.stringify(overlandRequestMock),
       })
     );
 
@@ -41,7 +41,7 @@ describe("Overland API", () => {
           "content-type": "application/json",
         },
         method: "POST",
-        body: JSON.stringify(exampleData),
+        body: JSON.stringify(overlandRequestMock),
       })
     );
 
