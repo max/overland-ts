@@ -29,3 +29,4 @@ bun test
 
 - [x] Set up CI with GitHub Actions
 - [ ] Store locations in SQLite
+- [ ] Fix the Overland schema
