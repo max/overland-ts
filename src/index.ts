@@ -1,15 +1,30 @@
-import { bearer } from "@elysiajs/bearer";
-import { Elysia } from "elysia";
-import validateToken from "./lib/validate-token";
+import { Elysia, ErrorHandler } from "elysia";
+import { apiRouter } from "./api";
+import { logger } from "./lib/logger";
+
+const handleError: ErrorHandler = ({ code, error }) => {
+  logger.error(error);
+
+  return {
+    code,
+    message: error.message,
+  };
+};
+
+const logRequest = (context: { [x: string]: any }) => {
+  const { request } = context;
+
+  logger.info(
+    `${request.method} ${request.url} - ${request.headers.get("user-agent")}`
+  );
+};
 
 export const app = new Elysia()
-  .use(bearer())
-  .on("beforeHandle", validateToken)
-  .post("/", () => ({
-    result: "ok",
-  }))
+  .onError(handleError)
+  .on("beforeHandle", logRequest)
+  .use(apiRouter)
   .listen(process.env.PORT || 3000);
 
-console.log(
-  `🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`,
+logger.info(
+  `📍 Overland API is running at ${app.server?.hostname}:${app.server?.port}`
 );
