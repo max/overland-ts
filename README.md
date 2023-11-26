@@ -27,5 +27,5 @@ bun test
 
 ## TODO
 
-- [ ] Set up CI with GitHub Actions
+- [x] Set up CI with GitHub Actions
 - [ ] Store locations in SQLite
