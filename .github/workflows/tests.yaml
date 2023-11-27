@@ -8,6 +8,7 @@ on:
 
 env:
   API__TOKEN: token
+  DATABASE__URL: file://./db.sqlite
 
 jobs:
   tests:
