@@ -10,20 +10,12 @@ To start the development server run:
 
 ```bash
 bun install
+cp .env.example .env
 bun db:migrate
 bun run dev
 ```
 
 Open http://localhost:3000/swagger with your browser to see the API documentation.
-
-## Testing
-
-To run the tests run:
-
-```bash
-bun db:migrate
-bun test
-```
 
 ---
 
