@@ -3,6 +3,7 @@ import config from "./src/lib/config";
 
 export default {
   schema: "./src/db/schema.ts",
+  out: "./src/db/migrations",
   driver: "libsql",
   dbCredentials: {
     url: config.database.url,
