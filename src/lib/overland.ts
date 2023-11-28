@@ -85,7 +85,7 @@ const TrackingStatsProperties = Type.Partial(
     }),
     deferred: Type.Number({
       description:
-        "Distance in meters to dfer location updates, configured on the settings screen",
+        "Distance in meters to defer location updates, configured on the settings screen",
     }),
     significant_change: Type.Enum(SignificantChangeOptions, {
       description: "String indicating the significant change mode",
