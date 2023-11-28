@@ -13,6 +13,13 @@ enum Motion {
   Stationary = "stationary",
 }
 
+enum BatteryState {
+  Unknown = "unknown",
+  Charging = "charging",
+  Full = "full",
+  Unplugged = "unplugged",
+}
+
 enum Activity {
   AutomotiveNavigation = "automotive_navigation",
   Fitness = "fitness",
@@ -20,24 +27,69 @@ enum Activity {
   Other = "other",
 }
 
+enum SignificantChangeOptions {
+  Disabled = "disabled",
+  Enabled = "enabled",
+  Exclusive = "exclusive",
+}
+
 const Properties = Type.Object({
-  timestamp: Type.String(),
-  altitude: Type.Number(),
-  speed: Type.Number(),
-  horizontal_accuracy: Type.Number(),
-  vertical_accuracy: Type.Number(),
-  motion: Type.Array(Type.Enum(Motion)),
-  pauses: Type.Boolean(),
-  activity: Type.Optional(Type.Enum(Activity)),
-  desired_accuracy: Type.Optional(Type.Number()),
-  deferred: Type.Optional(Type.Number()),
-  significant_change: Type.Optional(Type.String()),
-  locations_in_payload: Type.Optional(Type.Number()),
-  battery_state: Type.Optional(Type.String()),
-  battery_level: Type.Optional(Type.Number()),
-  device_id: Type.Optional(Type.String()),
-  wifi: Type.Optional(Type.String()),
-  unique_id: Type.Optional(Type.String()),
+  timestamp: Type.String({
+    description: "ISO 8601 timestamp",
+  }),
+  altitude: Type.Number({
+    description: "Altitude in meters",
+  }),
+  speed: Type.Number({
+    description: "Speed in meters per second",
+  }),
+  horizontal_accuracy: Type.Number({
+    description: "Accuracy of the position in meters",
+  }),
+  vertical_accuracy: Type.Number({
+    description: "Accuracy of the altitude in meters",
+  }),
+  motion: Type.Array(Type.Enum(Motion), {
+    description: "Array of motion states detected",
+  }),
+  battery_state: Type.Enum(BatteryState, {
+    description: "Battery state",
+  }),
+  battery_level: Type.Number({
+    description: "Value from 0 to 1 indicating the percent battery remaining",
+  }),
+  wifi: Type.String({
+    description: "SSID of the connected WiFi network, or an empty string",
+  }),
+  device_id: Type.String({
+    description: "Device ID configured in settings, or an empty string",
+  }),
+  unique_id: Type.String({
+    description: "Unique ID as set by Apple if setting is enabled",
+  }),
+
+  // Included only if "Include Tracking Stats" is enabled
+  pauses: Type.Boolean({
+    description: 'Whether "pauses updates automatically" is enabled',
+  }),
+  activity: Type.Enum(Activity, {
+    description: "Type of activity as set on the settings screen",
+  }),
+  desired_accuracy: Type.Number({
+    description:
+      "Requested accuracy in meters as confgirued on the settings screen",
+  }),
+  deferred: Type.Number({
+    description:
+      "Distance in meters to dfer location updates, configured on the settings screen",
+  }),
+  significant_change: Type.Enum(SignificantChangeOptions, {
+    description: "String indicating the significant change mode",
+  }),
+  locations_in_payload: Type.Number({
+    description:
+      "Number of locations sent in the batch along with this location",
+  }),
 });
 
 const Location = Type.Object({
