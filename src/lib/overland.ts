@@ -64,38 +64,43 @@ const Properties = Type.Object({
   device_id: Type.String({
     description: "Device ID configured in settings, or an empty string",
   }),
-  unique_id: Type.String({
-    description: "Unique ID as set by Apple if setting is enabled",
-  }),
-
-  // Included only if "Include Tracking Stats" is enabled
-  pauses: Type.Boolean({
-    description: 'Whether "pauses updates automatically" is enabled',
-  }),
-  activity: Type.Enum(Activity, {
-    description: "Type of activity as set on the settings screen",
-  }),
-  desired_accuracy: Type.Number({
-    description:
-      "Requested accuracy in meters as confgirued on the settings screen",
-  }),
-  deferred: Type.Number({
-    description:
-      "Distance in meters to dfer location updates, configured on the settings screen",
-  }),
-  significant_change: Type.Enum(SignificantChangeOptions, {
-    description: "String indicating the significant change mode",
-  }),
-  locations_in_payload: Type.Number({
-    description:
-      "Number of locations sent in the batch along with this location",
-  }),
+  unique_id: Type.Optional(
+    Type.String({
+      description: "Unique ID as set by Apple if setting is enabled",
+    })
+  ),
 });
+
+const TrackingStatsProperties = Type.Partial(
+  Type.Object({
+    pauses: Type.Boolean({
+      description: 'Whether "pauses updates automatically" is enabled',
+    }),
+    activity: Type.Enum(Activity, {
+      description: "Type of activity as set on the settings screen",
+    }),
+    desired_accuracy: Type.Number({
+      description:
+        "Requested accuracy in meters as confgirued on the settings screen",
+    }),
+    deferred: Type.Number({
+      description:
+        "Distance in meters to dfer location updates, configured on the settings screen",
+    }),
+    significant_change: Type.Enum(SignificantChangeOptions, {
+      description: "String indicating the significant change mode",
+    }),
+    locations_in_payload: Type.Number({
+      description:
+        "Number of locations sent in the batch along with this location",
+    }),
+  })
+);
 
 const Location = Type.Object({
   type: Type.String(),
   geometry: Geometry,
-  properties: Properties,
+  properties: Type.Composite([Properties, TrackingStatsProperties]),
 });
 
 export const OverlandSchema = Type.Object({
