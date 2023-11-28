@@ -8,6 +8,7 @@ on:
 
 env:
   API__TOKEN: token
+  DATABASE__URL: file:///tmp/db.sqlite
 
 jobs:
   tests:
@@ -17,5 +18,7 @@ jobs:
       - uses: oven-sh/setup-bun@v1
       - name: Install dependencies
         run: bun install
+      - name: Set up database
+        run: bun run db:migrate
       - name: Run integration tests
         run: bun run test
