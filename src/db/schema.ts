@@ -3,17 +3,18 @@ import { integer, real, sqliteTable, text } from "drizzle-orm/sqlite-core";
 
 export const locations = sqliteTable("locations", {
   id: integer("id").primaryKey({ autoIncrement: true }),
-  createdAt: text("created_at"),
-  latitude: real("latitude"),
-  longitude: real("longitude"),
-  altitude: real("altitude"),
-  batteryState: text("battery_state"), // TODO property
-  deviceID: text("device_id"), // TODO property
-  horizontalAccuracy: real("horizontal_accuracy"),
-  speed: real("speed"),
-  uniqueID: text("unique_id"), // TODO property
-  verticalAccuracy: real("vertical_accuracy"),
-  wifi: text("wifi"), // TODO: property
+  latitude: real("latitude").notNull(),
+  longitude: real("longitude").notNull(),
+  createdAt: text("created_at").notNull(), // timestamp
+  altitude: real("altitude").notNull(),
+  speed: real("speed").notNull(),
+  horizontalAccuracy: real("horizontal_accuracy").notNull(),
+  verticalAccuracy: real("vertical_accuracy").notNull(),
+  batteryState: text("battery_state").notNull(),
+  batteryLevel: text("battery_level").notNull(),
+  wifi: text("wifi").notNull(),
+  deviceID: text("device_id").notNull(),
+  uniqueID: text("unique_id"),
 });
 
 export const locationsRelations = relations(locations, ({ many }) => ({
