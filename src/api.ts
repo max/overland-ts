@@ -1,7 +1,7 @@
 import bearer from "@elysiajs/bearer";
 import { Elysia } from "elysia";
 import { db } from "./db";
-import { locations, motions } from "./db/schema";
+import { locations, motions, trackingStats } from "./db/schema";
 import config from "./lib/config";
 import { UnauthorizedError } from "./lib/error";
 import { OverlandSchema, OverlandSchemaType } from "./lib/overland";
@@ -22,17 +22,18 @@ export const apiRouter = new Elysia().group("/api", (app) =>
             const [{ newLocationID }] = await tx
               .insert(locations)
               .values({
-                altitude: location.properties.altitude,
-                batteryState: location.properties.battery_state,
-                createdAt: location.properties.timestamp,
-                deviceID: location.properties.device_id,
-                horizontalAccuracy: location.properties.horizontal_accuracy,
                 latitude: location.geometry.coordinates[1],
                 longitude: location.geometry.coordinates[0],
+                createdAt: location.properties.timestamp,
+                altitude: location.properties.altitude,
                 speed: location.properties.speed,
-                uniqueID: location.properties.unique_id,
+                horizontalAccuracy: location.properties.horizontal_accuracy,
                 verticalAccuracy: location.properties.vertical_accuracy,
+                batteryState: location.properties.battery_state,
+                batteryLevel: location.properties.battery_level,
                 wifi: location.properties.wifi,
+                deviceID: location.properties.device_id,
+                uniqueID: location.properties.unique_id,
               })
               .returning({ newLocationID: locations.id });
 
@@ -42,6 +43,16 @@ export const apiRouter = new Elysia().group("/api", (app) =>
                 type: motion,
               });
             }
+
+            await tx.insert(trackingStats).values({
+              locationID: newLocationID,
+              pauses: location.properties.pauses,
+              activity: location.properties.activity,
+              desiredAccuracy: location.properties.desired_accuracy,
+              deferred: location.properties.deferred,
+              significantChange: location.properties.significant_change,
+              locationsInPayload: location.properties.locations_in_payload,
+            });
           }
         });
       },
