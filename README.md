@@ -28,5 +28,6 @@ bun test
 ## TODO
 
 - [x] Set up CI with GitHub Actions
-- [ ] Store locations in SQLite
-- [ ] Fix the Overland schema
+- [x] Store locations in SQLite
+- [x] Fix the Overland schema
+- [ ] Add deployment to Fly
